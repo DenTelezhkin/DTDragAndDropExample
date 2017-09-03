@@ -7,56 +7,6 @@ A collection view controller that displays the photos in a photo album. Supports
 
 import UIKit
 
-extension PhotoCollectionViewController : UICollectionViewDropDelegate {
-    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-        guard album != nil else { return false }
-        return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        if session.localDragSession != nil {
-            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        } else {
-            return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        guard album != nil else { return }
-
-        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
-
-        switch coordinator.proposal.operation {
-        case .copy:
-            // Receiving items from another app.
-            loadAndInsertItems(at: destinationIndexPath, with: coordinator)
-        case .move:
-            let items = coordinator.items
-            if items.contains(where: { $0.sourceIndexPath != nil }) {
-                if items.count == 1, let item = items.first {
-                    // Reordering a single item from this collection view.
-                    reorder(item, to: destinationIndexPath, with: coordinator)
-                }
-            } else {
-                // Moving items from somewhere else in this app.
-                moveItems(to: destinationIndexPath, with: coordinator)
-            }
-        default: return
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, dropPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        return previewParameters(forItemAt:indexPath)
-    }
-
-    private func previewParameters(forItemAt indexPath:IndexPath) -> UIDragPreviewParameters? {
-        let cell = collectionView!.cellForItem(at: indexPath) as! PhotoCollectionViewCell
-        let previewParameters = UIDragPreviewParameters()
-        previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
-        return previewParameters
-    }
-}
-
 class PhotoCollectionViewController: UICollectionViewController, DTCollectionViewManageable {
     
     private weak var albumTableViewController: AlbumTableViewController?
@@ -113,49 +63,46 @@ class PhotoCollectionViewController: UICollectionViewController, DTCollectionVie
     }
     
     func configureDrop() {
-//        manager.dropSessionDidEnd { session in
-//            print("Fuck you, Drop")
-//        }
-//        manager.canHandleDropSession { [weak self] session in
-//            guard self?.album != nil else { return false}
-//            return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
-//        }
-//        manager.dropSessionDidUpdate { session, _ in
-//            if session.localDragSession != nil {
-//                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-//            } else {
-//                return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-//            }
-//        }
-//        manager.dropPreviewParameters { [weak self] indexPath in
-//            guard let cell = self?.collectionView?.cellForItem(at: indexPath) as? PhotoCollectionViewCell else { return nil }
-//            let previewParameters = UIDragPreviewParameters()
-//            previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
-//            return previewParameters
-//        }
-//        manager.performDropWithCoordinator { [weak self] coordinator in
-//            guard self?.album != nil else { return }
-//
-//            let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
-//
-//            switch coordinator.proposal.operation {
-//            case .copy:
-//                // Receiving items from another app.
-//                self?.loadAndInsertItems(at: destinationIndexPath, with: coordinator)
-//            case .move:
-//                let items = coordinator.items
-//                if items.contains(where: { $0.sourceIndexPath != nil }) {
-//                    if items.count == 1, let item = items.first {
-//                        // Reordering a single item from this collection view.
-//                        self?.reorder(item, to: destinationIndexPath, with: coordinator)
-//                    }
-//                } else {
-//                    // Moving items from somewhere else in this app.
-//                    self?.moveItems(to: destinationIndexPath, with: coordinator)
-//                }
-//            default: return
-//            }
-//        }
+        manager.canHandleDropSession { [weak self] session in
+            guard self?.album != nil else { return false}
+            return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
+        }
+        manager.dropSessionDidUpdate { session, _ in
+            if session.localDragSession != nil {
+                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+            } else {
+                return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+            }
+        }
+        manager.dropPreviewParameters { [weak self] indexPath in
+            guard let cell = self?.collectionView?.cellForItem(at: indexPath) as? PhotoCollectionViewCell else { return nil }
+            let previewParameters = UIDragPreviewParameters()
+            previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
+            return previewParameters
+        }
+        manager.performDropWithCoordinator { [weak self] coordinator in
+            guard self?.album != nil else { return }
+
+            let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+
+            switch coordinator.proposal.operation {
+            case .copy:
+                // Receiving items from another app.
+                self?.loadAndInsertItems(at: destinationIndexPath, with: coordinator)
+            case .move:
+                let items = coordinator.items
+                if items.contains(where: { $0.sourceIndexPath != nil }) {
+                    if items.count == 1, let item = items.first {
+                        // Reordering a single item from this collection view.
+                        self?.reorder(item, to: destinationIndexPath, with: coordinator)
+                    }
+                } else {
+                    // Moving items from somewhere else in this app.
+                    self?.moveItems(to: destinationIndexPath, with: coordinator)
+                }
+            default: return
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
