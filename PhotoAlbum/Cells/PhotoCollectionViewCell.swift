@@ -7,8 +7,7 @@ A collection view cell used to display a photo in a photo album.
 
 import UIKit
 
-class PhotoCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "PhotoCollectionViewCell"
+class PhotoCollectionViewCell: UICollectionViewCell, ModelTransfer {
     
     @IBOutlet private weak var photoImageView: UIImageView!
     
@@ -17,7 +16,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     /// Configures the cell to display the photo.
-    func configure(with photo: Photo) {
+    func update(with photo: Photo) {
         photoImageView.image = photo.image
     }
 }

@@ -7,7 +7,57 @@ A collection view controller that displays the photos in a photo album. Supports
 
 import UIKit
 
-class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+extension PhotoCollectionViewController : UICollectionViewDropDelegate {
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        guard album != nil else { return false }
+        return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        if session.localDragSession != nil {
+            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        } else {
+            return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        guard album != nil else { return }
+
+        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+
+        switch coordinator.proposal.operation {
+        case .copy:
+            // Receiving items from another app.
+            loadAndInsertItems(at: destinationIndexPath, with: coordinator)
+        case .move:
+            let items = coordinator.items
+            if items.contains(where: { $0.sourceIndexPath != nil }) {
+                if items.count == 1, let item = items.first {
+                    // Reordering a single item from this collection view.
+                    reorder(item, to: destinationIndexPath, with: coordinator)
+                }
+            } else {
+                // Moving items from somewhere else in this app.
+                moveItems(to: destinationIndexPath, with: coordinator)
+            }
+        default: return
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        return previewParameters(forItemAt:indexPath)
+    }
+
+    private func previewParameters(forItemAt indexPath:IndexPath) -> UIDragPreviewParameters? {
+        let cell = collectionView!.cellForItem(at: indexPath) as! PhotoCollectionViewCell
+        let previewParameters = UIDragPreviewParameters()
+        previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
+        return previewParameters
+    }
+}
+
+class PhotoCollectionViewController: UICollectionViewController, DTCollectionViewManageable {
     
     private weak var albumTableViewController: AlbumTableViewController?
     
@@ -17,17 +67,95 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    /// Stores the album state when the drag begins.
+    private var albumBeforeDrag: PhotoAlbum?
+    
     private func photo(at indexPath: IndexPath) -> Photo {
-        return album!.photos[indexPath.item]
+        return manager.memoryStorage.item(at: indexPath) as! Photo
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        collectionView?.dragDelegate = self
-        collectionView?.dropDelegate = self
+        
+        manager.startManaging(withDelegate: self)
+        manager.register(PhotoCollectionViewCell.self)
+        configureDrag()
+        configureDrop()
         
         updateRightBarButtonItem()
+        
+        manager.memoryStorage.setItems(album?.photos ?? [])
+    }
+    
+    func configureDrag() {
+        manager.itemsForBeginningDragSession(from: PhotoCollectionViewCell.self) { [weak self] _, _, _, indexPath in
+            return [self?.dragItem(forPhotoAt: indexPath)].flatMap { $0 }
+        }
+        manager.itemsForAddingToDragSession(from: PhotoCollectionViewCell.self) { [weak self] _, _, _, _, indexPath in
+            return [self?.dragItem(forPhotoAt: indexPath)].flatMap { $0 }
+        }
+        manager.dragPreviewParameters(for: PhotoCollectionViewCell.self) { cell, _, _  in
+            let previewParameters = UIDragPreviewParameters()
+            previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
+            return previewParameters
+        }
+        manager.dragSessionWillBegin { [weak self] _ in
+            self?.albumBeforeDrag = self?.album
+        }
+        manager.dragSessionDidEnd { [weak self] _ in
+            guard let collectionView = self?.collectionView else { return }
+            if let uuid = self?.album?.identifier, let newAlbum = PhotoLibrary.sharedInstance.album(for: uuid) {
+                self?.deleteItems(forPhotosMovedFrom: collectionView, albumAfterDrag: newAlbum)
+            }
+            self?.albumBeforeDrag = nil
+            self?.reloadAlbums()
+        }
+    }
+    
+    func configureDrop() {
+//        manager.dropSessionDidEnd { session in
+//            print("Fuck you, Drop")
+//        }
+//        manager.canHandleDropSession { [weak self] session in
+//            guard self?.album != nil else { return false}
+//            return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
+//        }
+//        manager.dropSessionDidUpdate { session, _ in
+//            if session.localDragSession != nil {
+//                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+//            } else {
+//                return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+//            }
+//        }
+//        manager.dropPreviewParameters { [weak self] indexPath in
+//            guard let cell = self?.collectionView?.cellForItem(at: indexPath) as? PhotoCollectionViewCell else { return nil }
+//            let previewParameters = UIDragPreviewParameters()
+//            previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
+//            return previewParameters
+//        }
+//        manager.performDropWithCoordinator { [weak self] coordinator in
+//            guard self?.album != nil else { return }
+//
+//            let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+//
+//            switch coordinator.proposal.operation {
+//            case .copy:
+//                // Receiving items from another app.
+//                self?.loadAndInsertItems(at: destinationIndexPath, with: coordinator)
+//            case .move:
+//                let items = coordinator.items
+//                if items.contains(where: { $0.sourceIndexPath != nil }) {
+//                    if items.count == 1, let item = items.first {
+//                        // Reordering a single item from this collection view.
+//                        self?.reorder(item, to: destinationIndexPath, with: coordinator)
+//                    }
+//                } else {
+//                    // Moving items from somewhere else in this app.
+//                    self?.moveItems(to: destinationIndexPath, with: coordinator)
+//                }
+//            default: return
+//            }
+//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,7 +198,6 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     /// Performs updates to the photo library backing store, then loads the latest album & photo values from it.
     private func updatePhotoLibrary(updates: (PhotoLibrary) -> Void) {
         updates(PhotoLibrary.sharedInstance)
-        reloadAlbumFromPhotoLibrary()
     }
     
     /// Loads the latest album & photo values from the photo library backing store.
@@ -78,41 +205,18 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         if let albumIdentifier = album?.identifier {
             album = PhotoLibrary.sharedInstance.album(for: albumIdentifier)
         }
+        reloadAlbums()
+    }
+    
+    private func reloadAlbums() {
         albumTableViewController?.reloadAlbumsFromPhotoLibrary()
         albumTableViewController?.updateVisibleAlbumCells()
     }
     
     /// Called when an photo has been automatically inserted into the album this collection view is displaying.
-    func insertedItem(at index: Int) {
-        collectionView?.performBatchUpdates({
-            self.reloadAlbumFromPhotoLibrary()
-            self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
-        })
-    }
-    
-    // MARK: UICollectionViewDataSource & UICollectionViewDelegate
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let album = album else { return 0 }
-        return album.photos.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.configure(with: photo(at: indexPath))
-        return cell
-    }
-
-    // MARK: UICollectionViewDragDelegate
-    
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let dragItem = self.dragItem(forPhotoAt: indexPath)
-        return [dragItem]
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        let dragItem = self.dragItem(forPhotoAt: indexPath)
-        return [dragItem]
+    func insertedItem(_ item: Any, at index: Int) {
+        _ = try? manager.memoryStorage.insertItem(item, to: IndexPath(item: index, section: 0))
+        reloadAlbums()
     }
     
     /// Helper method to obtain a drag item for the photo at the index path.
@@ -124,29 +228,9 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         return dragItem
     }
     
-    func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell else { return nil }
-        let previewParameters = UIDragPreviewParameters()
-        previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
-        return previewParameters
-    }
-    
-    /// Stores the album state when the drag begins.
-    private var albumBeforeDrag: PhotoAlbum?
-    
-    func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
-        albumBeforeDrag = album
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
-        reloadAlbumFromPhotoLibrary()
-        deleteItems(forPhotosMovedFrom: collectionView)
-        albumBeforeDrag = nil
-    }
-    
     /// Compares the album state before & after the drag to delete items in the collection view that represent photos moved elsewhere.
-    private func deleteItems(forPhotosMovedFrom collectionView: UICollectionView) {
-        guard let albumBeforeDrag = albumBeforeDrag, let albumAfterDrag = album else { return }
+    private func deleteItems(forPhotosMovedFrom collectionView: UICollectionView, albumAfterDrag: PhotoAlbum) {
+        guard let albumBeforeDrag = albumBeforeDrag else { return }
         
         var indexPathsToDelete = [IndexPath]()
         for (index, photo) in albumBeforeDrag.photos.enumerated() {
@@ -154,50 +238,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
                 indexPathsToDelete.append(IndexPath(item: index, section: 0))
             }
         }
-        if !indexPathsToDelete.isEmpty {
-            collectionView.performBatchUpdates({
-                collectionView.deleteItems(at: indexPathsToDelete)
-            })
-        }
-    }
-    
-    // MARK: UICollectionViewDropDelegate
-    
-    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-        guard album != nil else { return false }
-        return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        if session.localDragSession != nil {
-            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        } else {
-            return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        guard album != nil else { return }
-        
-        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
-        
-        switch coordinator.proposal.operation {
-        case .copy:
-            // Receiving items from another app.
-            loadAndInsertItems(at: destinationIndexPath, with: coordinator)
-        case .move:
-            let items = coordinator.items
-            if items.contains(where: { $0.sourceIndexPath != nil }) {
-                if items.count == 1, let item = items.first {
-                    // Reordering a single item from this collection view.
-                    reorder(item, to: destinationIndexPath, with: coordinator)
-                }
-            } else {
-                // Moving items from somewhere else in this app.
-                moveItems(to: destinationIndexPath, with: coordinator)
-            }
-        default: return
-        }
+        manager.memoryStorage.removeItems(at: indexPathsToDelete)
     }
     
     /// Loads data using the item provider and inserts a new item in the collection view for each item in the drop session, using placeholders while the data loads asynchronously.
@@ -208,25 +249,23 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
             let dragItem = item.dragItem
             guard dragItem.itemProvider.canLoadObject(ofClass: UIImage.self) else { continue }
             
-            var placeholderContext: UICollectionViewDropPlaceholderContext? = nil
+            var placeholderContext: DTCollectionViewDropPlaceholderContext? = nil
             
             // Start loading the image for this drag item.
             let progress = dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (droppedImage, _) in
-                DispatchQueue.main.async {
-                    if let image = droppedImage as? UIImage {
-                        // The image loaded successfully, commit the insertion to exchange the placeholder for the final cell.
-                        placeholderContext?.commitInsertion { insertionIndexPath in
-                            // Update the photo library backing store to insert the new photo, using the insertionIndexPath passed into the closure.
-                            let photo = Photo(image: image)
-                            let insertionIndex = insertionIndexPath.item
-                            self.updatePhotoLibrary { photoLibrary in
-                                photoLibrary.insert(photo, into: album, at: insertionIndex)
-                            }
+                if let image = droppedImage as? UIImage {
+                    let photo = Photo(image: image)
+                    // The image loaded successfully, commit the insertion to exchange the placeholder for the final cell.
+                    placeholderContext?.commitInsertion(ofItem: photo, { insertionIndexPath in
+                        // Update the photo library backing store to insert the new photo, using the insertionIndexPath passed into the closure.
+                        self.updatePhotoLibrary { photoLibrary in
+                            photoLibrary.insert(photo, into: album, at: insertionIndexPath.item)
                         }
-                    } else {
-                        // The data transfer for this item was canceled or failed, delete the placeholder.
-                        placeholderContext?.deletePlaceholder()
-                    }
+                        self.reloadAlbums()
+                    })
+                } else {
+                    // The data transfer for this item was canceled or failed, delete the placeholder.
+                    placeholderContext?.deletePlaceholder()
                 }
             }
             let placeholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: PhotoPlaceholderCollectionViewCell.identifier)
@@ -236,7 +275,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
             }
             
             // Insert and animate to a placeholder for this item, configuring the placeholder cell to display the progress of the data transfer for this item.
-            placeholderContext = coordinator.drop(dragItem, to: placeholder)
+            placeholderContext = manager.drop(dragItem, to: placeholder, with: coordinator)
         }
         
         // Disable the system progress indicator as we are displaying the progress of drag items in the placeholder cells.
@@ -245,16 +284,14 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     /// Moves an item (photo) in this collection view from one index path to another index path.
     private func reorder(_ item: UICollectionViewDropItem, to destinationIndexPath: IndexPath, with coordinator: UICollectionViewDropCoordinator) {
-        guard let collectionView = collectionView, let album = album, let sourceIndexPath = item.sourceIndexPath else { return }
+        guard let album = album, let sourceIndexPath = item.sourceIndexPath else { return }
         
-        // Perform batch updates to update the photo library backing store and perform the delete & insert on the collection view.
-        collectionView.performBatchUpdates({
-            self.updatePhotoLibrary { photoLibrary in
-                photoLibrary.movePhoto(in: album, from: sourceIndexPath.item, to: destinationIndexPath.item)
-            }
-            collectionView.deleteItems(at: [sourceIndexPath])
-            collectionView.insertItems(at: [destinationIndexPath])
-        })
+        // Update the photo library backing store and perform the move on an item in collection view.
+        updatePhotoLibrary { photoLibrary in
+            photoLibrary.movePhoto(in: album, from: sourceIndexPath.item, to: destinationIndexPath.item)
+        }
+        reloadAlbums()
+        manager.memoryStorage.moveItem(at: sourceIndexPath, to: destinationIndexPath)
         
         // Animate the drag item to the newly inserted item in the collection view.
         coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -262,7 +299,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     /// Moves one or more photos from a different album into this album by inserting items into this collection view.
     private func moveItems(to destinationIndexPath: IndexPath, with coordinator: UICollectionViewDropCoordinator) {
-        guard let collectionView = collectionView, let album = album else { return }
+        guard let album = album else { return }
         
         var destinationIndex = destinationIndexPath.item
         for item in coordinator.items {
@@ -272,12 +309,11 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
             let insertionIndexPath = IndexPath(item: destinationIndex, section: 0)
             
             // Perform batch updates to update the photo library backing store and perform the insert on the collection view.
-            collectionView.performBatchUpdates({
-                self.updatePhotoLibrary { photoLibrary in
-                    photoLibrary.movePhoto(photo, to: album, index: destinationIndex)
-                }
-                collectionView.insertItems(at: [insertionIndexPath])
-            })
+            updatePhotoLibrary { photoLibrary in
+                photoLibrary.movePhoto(photo, to: album, index: destinationIndex)
+            }
+            reloadAlbums()
+            _ = try? manager.memoryStorage.insertItem(photo, to: insertionIndexPath)
             
             // Animate the drag item to the newly inserted item in the collection view.
             coordinator.drop(item.dragItem, toItemAt: insertionIndexPath)

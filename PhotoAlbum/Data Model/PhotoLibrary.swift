@@ -84,7 +84,7 @@ class PhotoLibrary {
             let photo = Photo(image: image)
             let insertionIndex = Int(arc4random_uniform(UInt32(self.albums[albumIndex].photos.count)))
             self.albums[albumIndex].photos.insert(photo, at: insertionIndex)
-            photoCollectionViewController.insertedItem(at: insertionIndex)
+            photoCollectionViewController.insertedItem(photo, at: insertionIndex)
         })
     }
     

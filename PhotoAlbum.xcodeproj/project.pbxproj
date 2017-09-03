@@ -47,12 +47,10 @@
 		37EDDE8A1EDE03CC008B4EC2 /* Album7Photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE681EDE036B008B4EC2 /* Album7Photo2.jpg */; };
 		37EDDE8B1EDE03CC008B4EC2 /* Album7Photo3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE5A1EDE036B008B4EC2 /* Album7Photo3.jpg */; };
 		37EDDE8C1EDE03CC008B4EC2 /* Album7Photo4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE521EDE036B008B4EC2 /* Album7Photo4.jpg */; };
-		9A0B948B1F5C1542008604F2 /* DTTableViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */; };
-		9A0B948C1F5C1542008604F2 /* DTTableViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A0B948D1F5C1542008604F2 /* DTCollectionViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */; };
-		9A0B948E1F5C1542008604F2 /* DTCollectionViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A0B948F1F5C1542008604F2 /* DTModelStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */; };
-		9A0B94901F5C1542008604F2 /* DTModelStorage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A074ADE1F5C423D000B6D3D /* DTTableViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB4A40E1F5C4215008FA92A /* DTTableViewManager.framework */; };
+		9A074ADF1F5C423D000B6D3D /* DTTableViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB4A40E1F5C4215008FA92A /* DTTableViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A074AE21F5C4245000B6D3D /* DTCollectionViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB4A3F91F5C4211008FA92A /* DTCollectionViewManager.framework */; };
+		9A074AE31F5C4245000B6D3D /* DTCollectionViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB4A3F91F5C4211008FA92A /* DTCollectionViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D09F1C361EC1349100C07155 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C351EC1349100C07155 /* AppDelegate.swift */; };
 		D09F1C381EC1349100C07155 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C371EC1349100C07155 /* PhotoCollectionViewController.swift */; };
 		D09F1C3B1EC1349100C07155 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09F1C391EC1349100C07155 /* Main.storyboard */; };
@@ -63,6 +61,93 @@
 		D0F2003F1EC22C27007D725F /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F2003E1EC22C27007D725F /* AlbumTableViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9A074AE01F5C423D000B6D3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A2A38BB1AEE285E0021E97D;
+			remoteInfo = "DTTableViewManager-iOS";
+		};
+		9A074AE41F5C4245000B6D3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AE671481AEE61F800B25A5F;
+			remoteInfo = "DTCollectionViewManager-iOS";
+		};
+		9AB4A3F41F5C4211008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A99AA7C1B8A219300428802;
+			remoteInfo = Example;
+		};
+		9AB4A3F61F5C4211008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A99AA911B8A219300428802;
+			remoteInfo = "Tests-iOS";
+		};
+		9AB4A3F81F5C4211008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AE671491AEE61F800B25A5F;
+			remoteInfo = "DTCollectionViewManager-iOS";
+		};
+		9AB4A3FA1F5C4211008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AC532031BE5F67D006CB18A;
+			remoteInfo = "DTCollectionViewManager-tvOS";
+		};
+		9AB4A3FC1F5C4211008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AC532381BE5F77F006CB18A;
+			remoteInfo = "Tests-tvOS";
+		};
+		9AB4A4091F5C4215008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A9B17021B65771600D8ABD3;
+			remoteInfo = Example;
+		};
+		9AB4A40B1F5C4215008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AF0031A1A5ABE7000ABFC90;
+			remoteInfo = "Tests-iOS";
+		};
+		9AB4A40D1F5C4215008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A2A38BC1AEE285E0021E97D;
+			remoteInfo = "DTTableViewManager-iOS";
+		};
+		9AB4A40F1F5C4215008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A6CED7D1BE570750091B0AF;
+			remoteInfo = "Tests-tvOS";
+		};
+		9AB4A4111F5C4215008FA92A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A6CED8C1BE571860091B0AF;
+			remoteInfo = "DTTableViewManager-tvOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		9A0B940D1F5C0409008604F2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -70,9 +155,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9A0B948C1F5C1542008604F2 /* DTTableViewManager.framework in Embed Frameworks */,
-				9A0B94901F5C1542008604F2 /* DTModelStorage.framework in Embed Frameworks */,
-				9A0B948E1F5C1542008604F2 /* DTCollectionViewManager.framework in Embed Frameworks */,
+				9A074ADF1F5C423D000B6D3D /* DTTableViewManager.framework in Embed Frameworks */,
+				9A074AE31F5C4245000B6D3D /* DTCollectionViewManager.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,10 +207,9 @@
 		4AC0D967B224B538B246D8B5 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7EEF833D1EDE223E006902B1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86AF9B10BBAE519D9ED25C56 /* SampleCode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
-		9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTTableViewManager.framework; path = Carthage/Build/iOS/DTTableViewManager.framework; sourceTree = "<group>"; };
-		9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTCollectionViewManager.framework; path = Carthage/Build/iOS/DTCollectionViewManager.framework; sourceTree = "<group>"; };
-		9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTModelStorage.framework; path = Carthage/Build/iOS/DTModelStorage.framework; sourceTree = "<group>"; };
 		9A88FF201F5C169500C7B70C /* PhotoAlbum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoAlbum-Bridging-Header.h"; sourceTree = "<group>"; };
+		9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DTCollectionViewManager.xcodeproj; path = Carthage/Checkouts/DTCollectionViewManager/DTCollectionViewManager.xcodeproj; sourceTree = "<group>"; };
+		9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DTTableViewManager.xcodeproj; path = Carthage/Checkouts/DTTableViewManager/DTTableViewManager.xcodeproj; sourceTree = "<group>"; };
 		D09F1C321EC1349100C07155 /* PhotoAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09F1C351EC1349100C07155 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D09F1C371EC1349100C07155 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -144,9 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A0B948B1F5C1542008604F2 /* DTTableViewManager.framework in Frameworks */,
-				9A0B948F1F5C1542008604F2 /* DTModelStorage.framework in Frameworks */,
-				9A0B948D1F5C1542008604F2 /* DTCollectionViewManager.framework in Frameworks */,
+				9A074ADE1F5C423D000B6D3D /* DTTableViewManager.framework in Frameworks */,
+				9A074AE21F5C4245000B6D3D /* DTCollectionViewManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,12 +321,35 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
+		9AB4A3EA1F5C4211008FA92A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9AB4A3F51F5C4211008FA92A /* Example.app */,
+				9AB4A3F71F5C4211008FA92A /* Tests-iOS.xctest */,
+				9AB4A3F91F5C4211008FA92A /* DTCollectionViewManager.framework */,
+				9AB4A3FB1F5C4211008FA92A /* DTCollectionViewManager.framework */,
+				9AB4A3FD1F5C4211008FA92A /* Tests-tvOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9AB4A3FF1F5C4214008FA92A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9AB4A40A1F5C4215008FA92A /* Example.app */,
+				9AB4A40C1F5C4215008FA92A /* Tests-iOS.xctest */,
+				9AB4A40E1F5C4215008FA92A /* DTTableViewManager.framework */,
+				9AB4A4101F5C4215008FA92A /* Tests-tvOS.xctest */,
+				9AB4A4121F5C4215008FA92A /* DTTableViewManager.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D09F1C291EC1349100C07155 = {
 			isa = PBXGroup;
 			children = (
-				9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */,
-				9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */,
-				9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */,
+				9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */,
+				9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */,
 				7EEF833D1EDE223E006902B1 /* README.md */,
 				D09F1C341EC1349100C07155 /* PhotoAlbum */,
 				D09F1C331EC1349100C07155 /* Products */,
@@ -295,6 +400,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A074AE11F5C423D000B6D3D /* PBXTargetDependency */,
+				9A074AE51F5C4245000B6D3D /* PBXTargetDependency */,
 			);
 			name = PhotoAlbum;
 			productName = PhotoAlbum;
@@ -329,12 +436,95 @@
 			mainGroup = D09F1C291EC1349100C07155;
 			productRefGroup = D09F1C331EC1349100C07155 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9AB4A3EA1F5C4211008FA92A /* Products */;
+					ProjectRef = 9AB4A3E91F5C4211008FA92A /* DTCollectionViewManager.xcodeproj */;
+				},
+				{
+					ProductGroup = 9AB4A3FF1F5C4214008FA92A /* Products */;
+					ProjectRef = 9AB4A3FE1F5C4214008FA92A /* DTTableViewManager.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				D09F1C311EC1349100C07155 /* PhotoAlbum */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9AB4A3F51F5C4211008FA92A /* Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Example.app;
+			remoteRef = 9AB4A3F41F5C4211008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A3F71F5C4211008FA92A /* Tests-iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Tests-iOS.xctest";
+			remoteRef = 9AB4A3F61F5C4211008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A3F91F5C4211008FA92A /* DTCollectionViewManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DTCollectionViewManager.framework;
+			remoteRef = 9AB4A3F81F5C4211008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A3FB1F5C4211008FA92A /* DTCollectionViewManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DTCollectionViewManager.framework;
+			remoteRef = 9AB4A3FA1F5C4211008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A3FD1F5C4211008FA92A /* Tests-tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Tests-tvOS.xctest";
+			remoteRef = 9AB4A3FC1F5C4211008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A40A1F5C4215008FA92A /* Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Example.app;
+			remoteRef = 9AB4A4091F5C4215008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A40C1F5C4215008FA92A /* Tests-iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Tests-iOS.xctest";
+			remoteRef = 9AB4A40B1F5C4215008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A40E1F5C4215008FA92A /* DTTableViewManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DTTableViewManager.framework;
+			remoteRef = 9AB4A40D1F5C4215008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A4101F5C4215008FA92A /* Tests-tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Tests-tvOS.xctest";
+			remoteRef = 9AB4A40F1F5C4215008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AB4A4121F5C4215008FA92A /* DTTableViewManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DTTableViewManager.framework;
+			remoteRef = 9AB4A4111F5C4215008FA92A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D09F1C301EC1349100C07155 /* Resources */ = {
@@ -403,6 +593,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9A074AE11F5C423D000B6D3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "DTTableViewManager-iOS";
+			targetProxy = 9A074AE01F5C423D000B6D3D /* PBXContainerItemProxy */;
+		};
+		9A074AE51F5C4245000B6D3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "DTCollectionViewManager-iOS";
+			targetProxy = 9A074AE41F5C4245000B6D3D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D09F1C391EC1349100C07155 /* Main.storyboard */ = {
@@ -550,7 +753,7 @@
 				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
@@ -578,7 +781,7 @@
 				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
