@@ -1,0 +1,6 @@
+[submodule "Carthage/Checkouts/DTTableViewManager"]
+	url = https://github.com/DenHeadless/DTTableViewManager.git
+[submodule "Carthage/Checkouts/DTCollectionViewManager"]
+	url = https://github.com/DenHeadless/DTCollectionViewManager.git
+[submodule "Carthage/Checkouts/DTModelStorage"]
+	url = https://github.com/DenHeadless/DTModelStorage.git
