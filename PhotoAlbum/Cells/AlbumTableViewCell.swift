@@ -7,8 +7,7 @@ A table view cell used to display a photo album in the photo library.
 
 import UIKit
 
-class AlbumTableViewCell: UITableViewCell {
-    static let reuseIdentifier = "AlbumTableViewCell"
+class AlbumTableViewCell: UITableViewCell, ModelTransfer {
     
     /// Returns a rect for the image view that displays the album thumbnail in the coordinate space of the cell, if it is visible.
     var rectForAlbumThumbnail: CGRect? {
@@ -19,7 +18,7 @@ class AlbumTableViewCell: UITableViewCell {
     }
     
     /// Configures the cell to display the album.
-    func configure(with album: PhotoAlbum) {
+    func update(with album: PhotoAlbum) {
         accessoryType = .disclosureIndicator
         textLabel?.text = album.title
         imageView?.image = album.thumbnail

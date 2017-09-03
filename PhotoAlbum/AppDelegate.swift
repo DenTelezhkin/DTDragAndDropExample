@@ -6,8 +6,6 @@ The application delegate.
 */
 
 import UIKit
-import DTTableViewManager
-import DTCollectionViewManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -47,6 +47,12 @@
 		37EDDE8A1EDE03CC008B4EC2 /* Album7Photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE681EDE036B008B4EC2 /* Album7Photo2.jpg */; };
 		37EDDE8B1EDE03CC008B4EC2 /* Album7Photo3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE5A1EDE036B008B4EC2 /* Album7Photo3.jpg */; };
 		37EDDE8C1EDE03CC008B4EC2 /* Album7Photo4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE521EDE036B008B4EC2 /* Album7Photo4.jpg */; };
+		9A0B948B1F5C1542008604F2 /* DTTableViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */; };
+		9A0B948C1F5C1542008604F2 /* DTTableViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A0B948D1F5C1542008604F2 /* DTCollectionViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */; };
+		9A0B948E1F5C1542008604F2 /* DTCollectionViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A0B948F1F5C1542008604F2 /* DTModelStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */; };
+		9A0B94901F5C1542008604F2 /* DTModelStorage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D09F1C361EC1349100C07155 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C351EC1349100C07155 /* AppDelegate.swift */; };
 		D09F1C381EC1349100C07155 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C371EC1349100C07155 /* PhotoCollectionViewController.swift */; };
 		D09F1C3B1EC1349100C07155 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09F1C391EC1349100C07155 /* Main.storyboard */; };
@@ -64,6 +70,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9A0B948C1F5C1542008604F2 /* DTTableViewManager.framework in Embed Frameworks */,
+				9A0B94901F5C1542008604F2 /* DTModelStorage.framework in Embed Frameworks */,
+				9A0B948E1F5C1542008604F2 /* DTCollectionViewManager.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,6 +123,10 @@
 		4AC0D967B224B538B246D8B5 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7EEF833D1EDE223E006902B1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86AF9B10BBAE519D9ED25C56 /* SampleCode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTTableViewManager.framework; path = Carthage/Build/iOS/DTTableViewManager.framework; sourceTree = "<group>"; };
+		9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTCollectionViewManager.framework; path = Carthage/Build/iOS/DTCollectionViewManager.framework; sourceTree = "<group>"; };
+		9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTModelStorage.framework; path = Carthage/Build/iOS/DTModelStorage.framework; sourceTree = "<group>"; };
+		9A88FF201F5C169500C7B70C /* PhotoAlbum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoAlbum-Bridging-Header.h"; sourceTree = "<group>"; };
 		D09F1C321EC1349100C07155 /* PhotoAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09F1C351EC1349100C07155 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D09F1C371EC1349100C07155 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +144,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A0B948B1F5C1542008604F2 /* DTTableViewManager.framework in Frameworks */,
+				9A0B948F1F5C1542008604F2 /* DTModelStorage.framework in Frameworks */,
+				9A0B948D1F5C1542008604F2 /* DTCollectionViewManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +242,9 @@
 		D09F1C291EC1349100C07155 = {
 			isa = PBXGroup;
 			children = (
+				9A0B94891F5C1542008604F2 /* DTCollectionViewManager.framework */,
+				9A0B948A1F5C1542008604F2 /* DTModelStorage.framework */,
+				9A0B94881F5C1542008604F2 /* DTTableViewManager.framework */,
 				7EEF833D1EDE223E006902B1 /* README.md */,
 				D09F1C341EC1349100C07155 /* PhotoAlbum */,
 				D09F1C331EC1349100C07155 /* Products */,
@@ -256,6 +275,7 @@
 				D09F1C3E1EC1349100C07155 /* LaunchScreen.storyboard */,
 				D09F1C391EC1349100C07155 /* Main.storyboard */,
 				D09F1C411EC1349100C07155 /* Info.plist */,
+				9A88FF201F5C169500C7B70C /* PhotoAlbum-Bridging-Header.h */,
 			);
 			path = PhotoAlbum;
 			sourceTree = "<group>";
@@ -415,7 +435,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -423,8 +445,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -468,7 +493,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -476,8 +503,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -509,15 +539,22 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -530,15 +567,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;

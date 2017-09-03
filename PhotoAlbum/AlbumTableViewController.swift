@@ -7,23 +7,89 @@ A table view controller that displays the albums in the photo library. Supports 
 
 import UIKit
 
-class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, UITableViewDropDelegate {
-    
-    private var albums = PhotoLibrary.sharedInstance.albums
-    
-    func album(at indexPath: IndexPath) -> PhotoAlbum {
-        return albums[indexPath.row]
-    }
+class AlbumTableViewController: UITableViewController, DTTableViewManageable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dragDelegate = self
-        tableView.dropDelegate = self
+        manager.startManaging(withDelegate: self)
+        manager.register(AlbumTableViewCell.self)
+        manager.editingStyle(for: AlbumTableViewCell.self) { _, _, _ in .none }
+        manager.shouldIndentWhileEditing(AlbumTableViewCell.self) { _, _, _ in false }
+        manager.move(AlbumTableViewCell.self) { [unowned manager] _, album, from, to in
+            PhotoLibrary.sharedInstance.moveAlbum(at: from.row, to: to.row)
+            manager.memoryStorage.moveItemWithoutAnimation(from: from, to: to)
+        }
+        configureDrag()
+        configureDrop()
         
         navigationItem.rightBarButtonItem = editButtonItem
         
         tableView.isSpringLoaded = true
+        
+        manager.memoryStorage.setItems(PhotoLibrary.sharedInstance.albums, forSection: 0)
+    }
+    
+    func configureDrag() {
+        manager.itemsForBeginningDragSession(from: AlbumTableViewCell.self) { [weak self] _, _, _, indexPath in
+            guard let _self = self else { return [] }
+            if _self.tableView.isEditing {
+                // User wants to reorder a row, don't return any drag items. The table view will allow a drag to begin for reordering only.
+                return []
+            }
+            return _self.dragItems(forAlbumAt: indexPath)
+        }
+        manager.dragSessionWillBegin { [weak self] _ in
+            self?.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+        manager.dragSessionDidEnd { [weak self] _ in
+            self?.navigationItem.rightBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    func configureDrop() {
+        manager.canHandleDropSession { session in
+            return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
+        }
+        
+        manager.dropSessionDidUpdate { [weak self] session, destinationIndexPath in
+            guard let tableView = self?.tableView, let storage = self?.manager.memoryStorage else { return UITableViewDropProposal(operation: .cancel)}
+            if tableView.isEditing && tableView.hasActiveDrag {
+                // The user is reordering albums in this table view.
+                return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+            } else if tableView.isEditing || tableView.hasActiveDrag {
+                // Disallow drops while editing (if not reordering), or if there's already an active drag from this table view.
+                return UITableViewDropProposal(operation: .forbidden)
+            } else if let destinationIndexPath = destinationIndexPath, destinationIndexPath.row < storage.items(inSection: 0)?.count ?? 0 {
+                // Allow drops into an existing album.
+                if session.localDragSession != nil {
+                    // If the drag began in this app, perform a move.
+                    return UITableViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
+                } else {
+                    // Insert a new copy of the data if the drag originated in a different app.
+                    return UITableViewDropProposal(operation: .copy, intent: .insertIntoDestinationIndexPath)
+                }
+            }
+            
+            // The destinationIndexPath is nil or does not correspond to an existing album.
+            return UITableViewDropProposal(operation: .cancel)
+        }
+        
+        manager.performDropWithCoordinator { [weak self] coordinator in
+            // Since we only support dropping into existing rows, make sure the destinationIndexPath is valid.
+            guard let destinationIndexPath = coordinator.destinationIndexPath, destinationIndexPath.row < self?.manager.memoryStorage.items(inSection: 0)?.count ?? 0 else { return }
+            
+            switch coordinator.proposal.operation {
+            case .copy:
+                // Receiving items from another app.
+                self?.loadAndInsertItems(into: destinationIndexPath, with: coordinator)
+            case .move:
+                // Moving items from somewhere else in this app.
+                self?.moveItems(into: destinationIndexPath, with: coordinator)
+            default:
+                return
+            }
+        }
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -41,17 +107,13 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
     
     /// Loads the latest album values from the photo library backing store.
     func reloadAlbumsFromPhotoLibrary() {
-        albums = PhotoLibrary.sharedInstance.albums
+        manager.memoryStorage.section(atIndex: 0)?.items = PhotoLibrary.sharedInstance.albums
     }
     
     /// Updates the visible cells to display the latest values for albums.
     func updateVisibleAlbumCells() {
-        guard let visibleIndexPaths = tableView.indexPathsForVisibleRows else { return }
-        for indexPath in visibleIndexPaths {
-            if let cell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
-                cell.configure(with: album(at: indexPath))
-                cell.setNeedsLayout()
-            }
+        manager.updateVisibleCells { cell in
+            cell.setNeedsLayout()
         }
     }
     
@@ -65,7 +127,7 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
             let photosCollectionViewController = detailNavigationController.topViewController as? PhotoCollectionViewController
             else { return }
         
-        let album = self.album(at: selectedIndexPath)
+        guard let album = manager.memoryStorage.item(at: selectedIndexPath) as? PhotoAlbum else { return }
         photosCollectionViewController.loadAlbum(album, from: self)
     }
     
@@ -76,52 +138,13 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
             else { return }
         
         // Load the selected album in the collection view to display its photos.
-        let album = self.album(at: selectedIndexPath)
+        guard let album = manager.memoryStorage.item(at: selectedIndexPath) as? PhotoAlbum else { return }
         photosViewController.loadAlbum(album, from: self)
-    }
-    
-    // MARK: UITableViewDataSource & UITableViewDelegate
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseIdentifier, for: indexPath) as! AlbumTableViewCell
-        cell.configure(with: album(at: indexPath))
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .none
-    }
-    
-    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Implement reordering by simply updating the photo library backing store.
-        updatePhotoLibrary { photoLibrary in
-            photoLibrary.moveAlbum(at: sourceIndexPath.row, to: destinationIndexPath.row)
-        }
-    }
-    
-    // MARK: UITableViewDragDelegate
-    
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        if tableView.isEditing {
-            // User wants to reorder a row, don't return any drag items. The table view will allow a drag to begin for reordering only.
-            return []
-        }
-        
-        let dragItems = self.dragItems(forAlbumAt: indexPath)
-        return dragItems
     }
     
     /// Helper method to obtain drag items for the photos inside the album at the index path.
     private func dragItems(forAlbumAt indexPath: IndexPath) -> [UIDragItem] {
-        let album = self.album(at: indexPath)
+        guard let album = manager.memoryStorage.item(at: indexPath) as? PhotoAlbum else { return [] }
         let dragItems = album.photos.map { (photo) -> UIDragItem in
             let itemProvider = photo.itemProvider
             let dragItem = UIDragItem(itemProvider: itemProvider)
@@ -132,61 +155,9 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
         return dragItems
     }
     
-    func tableView(_ tableView: UITableView, dragSessionWillBegin session: UIDragSession) {
-        navigationItem.rightBarButtonItem?.isEnabled = false
-    }
-    
-    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
-        navigationItem.rightBarButtonItem?.isEnabled = true
-    }
-    
-    // MARK: UITableViewDropDelegate
-    
-    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        return session.hasItemsConforming(toTypeIdentifiers: UIImage.readableTypeIdentifiersForItemProvider)
-    }
-    
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        if tableView.isEditing && tableView.hasActiveDrag {
-            // The user is reordering albums in this table view.
-            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        } else if tableView.isEditing || tableView.hasActiveDrag {
-            // Disallow drops while editing (if not reordering), or if there's already an active drag from this table view.
-            return UITableViewDropProposal(operation: .forbidden)
-        } else if let destinationIndexPath = destinationIndexPath, destinationIndexPath.row < albums.count {
-            // Allow drops into an existing album.
-            if session.localDragSession != nil {
-                // If the drag began in this app, perform a move.
-                return UITableViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
-            } else {
-                // Insert a new copy of the data if the drag originated in a different app.
-                return UITableViewDropProposal(operation: .copy, intent: .insertIntoDestinationIndexPath)
-            }
-        }
-        
-        // The destinationIndexPath is nil or does not correspond to an existing album.
-        return UITableViewDropProposal(operation: .cancel)
-    }
-    
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        // Since we only support dropping into existing rows, make sure the destinationIndexPath is valid.
-        guard let destinationIndexPath = coordinator.destinationIndexPath, destinationIndexPath.row < albums.count else { return }
-        
-        switch coordinator.proposal.operation {
-        case .copy:
-            // Receiving items from another app.
-            loadAndInsertItems(into: destinationIndexPath, with: coordinator)
-        case .move:
-            // Moving items from somewhere else in this app.
-            moveItems(into: destinationIndexPath, with: coordinator)
-        default:
-            return
-        }
-    }
-    
     /// Loads data using the item provider for each item in the drop session, inserting photos inside the album as they load.
     private func loadAndInsertItems(into destinationIndexPath: IndexPath, with coordinator: UITableViewDropCoordinator) {
-        let destinationAlbum = album(at: destinationIndexPath)
+        guard let destinationAlbum = manager.memoryStorage.item(at: destinationIndexPath) as? PhotoAlbum else { return }
         
         for item in coordinator.items {
             let dragItem = item.dragItem
@@ -216,7 +187,7 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
     
     /// Moves one or more photos from an album into another album.
     private func moveItems(into destinationIndexPath: IndexPath, with coordinator: UITableViewDropCoordinator) {
-        let destinationAlbum = album(at: destinationIndexPath)
+        guard let destinationAlbum = manager.memoryStorage.item(at: destinationIndexPath) as? PhotoAlbum else { return }
         
         for item in coordinator.items {
             let dragItem = item.dragItem
@@ -237,5 +208,4 @@ class AlbumTableViewController: UITableViewController, UITableViewDragDelegate, 
         
         updateVisibleAlbumsAndPhotos()
     }
-    
 }
