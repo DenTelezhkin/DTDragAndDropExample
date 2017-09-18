@@ -16,7 +16,7 @@ class AlbumTableViewController: UITableViewController, DTTableViewManageable {
         manager.register(AlbumTableViewCell.self)
         manager.editingStyle(for: AlbumTableViewCell.self) { _, _, _ in .none }
         manager.shouldIndentWhileEditing(AlbumTableViewCell.self) { _, _, _ in false }
-        manager.move(AlbumTableViewCell.self) { [unowned manager] _, album, from, to in
+        manager.move(AlbumTableViewCell.self) { [unowned manager] to, _, album, from in
             PhotoLibrary.sharedInstance.moveAlbum(at: from.row, to: to.row)
             manager.memoryStorage.moveItemWithoutAnimation(from: from, to: to)
         }
