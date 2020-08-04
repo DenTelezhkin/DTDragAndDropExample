@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "DTCollectionViewManager",
+        "repositoryURL": "https://github.com/DenTelezhkin/DTCollectionViewManager",
+        "state": {
+          "branch": "custom-view-registration",
+          "revision": "a850baa0acdf2969cc95f287c90b1b7b11320183",
+          "version": null
+        }
+      },
+      {
+        "package": "DTModelStorage",
+        "repositoryURL": "https://github.com/DenTelezhkin/DTModelStorage",
+        "state": {
+          "branch": "custom-view-mappings",
+          "revision": "e1f67af9096bef15aafac1014c709529c6fdf7a7",
+          "version": null
+        }
+      },
+      {
+        "package": "DTTableViewManager",
+        "repositoryURL": "https://github.com/DenTelezhkin/DTTableViewManager",
+        "state": {
+          "branch": "custom-view-mappings",
+          "revision": "ab17befc74417cf412ac84f581fe0f77f3a7b54e",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -47,12 +47,9 @@
 		37EDDE8A1EDE03CC008B4EC2 /* Album7Photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE681EDE036B008B4EC2 /* Album7Photo2.jpg */; };
 		37EDDE8B1EDE03CC008B4EC2 /* Album7Photo3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE5A1EDE036B008B4EC2 /* Album7Photo3.jpg */; };
 		37EDDE8C1EDE03CC008B4EC2 /* Album7Photo4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE521EDE036B008B4EC2 /* Album7Photo4.jpg */; };
-		9A074AFF1F5C61F7000B6D3D /* DTTableViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFC1F5C61F7000B6D3D /* DTTableViewManager.framework */; };
-		9A074B001F5C61F7000B6D3D /* DTTableViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFC1F5C61F7000B6D3D /* DTTableViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A074B011F5C61F7000B6D3D /* DTCollectionViewManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFD1F5C61F7000B6D3D /* DTCollectionViewManager.framework */; };
-		9A074B021F5C61F7000B6D3D /* DTCollectionViewManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFD1F5C61F7000B6D3D /* DTCollectionViewManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A074B031F5C61F7000B6D3D /* DTModelStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFE1F5C61F7000B6D3D /* DTModelStorage.framework */; };
-		9A074B041F5C61F7000B6D3D /* DTModelStorage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A074AFE1F5C61F7000B6D3D /* DTModelStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A8BBBDD24D95ED70078D24D /* DTModelStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBDC24D95ED70078D24D /* DTModelStorage */; };
+		9A8BBBE024D95EFC0078D24D /* DTTableViewManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */; };
+		9A8BBBE324D95F1F0078D24D /* DTCollectionViewManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBE224D95F1F0078D24D /* DTCollectionViewManager */; };
 		D09F1C361EC1349100C07155 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C351EC1349100C07155 /* AppDelegate.swift */; };
 		D09F1C381EC1349100C07155 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C371EC1349100C07155 /* PhotoCollectionViewController.swift */; };
 		D09F1C3B1EC1349100C07155 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09F1C391EC1349100C07155 /* Main.storyboard */; };
@@ -70,9 +67,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9A074B001F5C61F7000B6D3D /* DTTableViewManager.framework in Embed Frameworks */,
-				9A074B041F5C61F7000B6D3D /* DTModelStorage.framework in Embed Frameworks */,
-				9A074B021F5C61F7000B6D3D /* DTCollectionViewManager.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,9 +117,6 @@
 		4AC0D967B224B538B246D8B5 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7EEF833D1EDE223E006902B1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86AF9B10BBAE519D9ED25C56 /* SampleCode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
-		9A074AFC1F5C61F7000B6D3D /* DTTableViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTTableViewManager.framework; path = Carthage/Build/iOS/DTTableViewManager.framework; sourceTree = "<group>"; };
-		9A074AFD1F5C61F7000B6D3D /* DTCollectionViewManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTCollectionViewManager.framework; path = Carthage/Build/iOS/DTCollectionViewManager.framework; sourceTree = "<group>"; };
-		9A074AFE1F5C61F7000B6D3D /* DTModelStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTModelStorage.framework; path = Carthage/Build/iOS/DTModelStorage.framework; sourceTree = "<group>"; };
 		9A88FF201F5C169500C7B70C /* PhotoAlbum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoAlbum-Bridging-Header.h"; sourceTree = "<group>"; };
 		D09F1C321EC1349100C07155 /* PhotoAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09F1C351EC1349100C07155 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,9 +135,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A074AFF1F5C61F7000B6D3D /* DTTableViewManager.framework in Frameworks */,
-				9A074B031F5C61F7000B6D3D /* DTModelStorage.framework in Frameworks */,
-				9A074B011F5C61F7000B6D3D /* DTCollectionViewManager.framework in Frameworks */,
+				9A8BBBE024D95EFC0078D24D /* DTTableViewManager in Frameworks */,
+				9A8BBBDD24D95ED70078D24D /* DTModelStorage in Frameworks */,
+				9A8BBBE324D95F1F0078D24D /* DTCollectionViewManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,9 +233,6 @@
 		D09F1C291EC1349100C07155 = {
 			isa = PBXGroup;
 			children = (
-				9A074AFD1F5C61F7000B6D3D /* DTCollectionViewManager.framework */,
-				9A074AFE1F5C61F7000B6D3D /* DTModelStorage.framework */,
-				9A074AFC1F5C61F7000B6D3D /* DTTableViewManager.framework */,
 				7EEF833D1EDE223E006902B1 /* README.md */,
 				D09F1C341EC1349100C07155 /* PhotoAlbum */,
 				D09F1C331EC1349100C07155 /* Products */,
@@ -297,6 +285,11 @@
 			dependencies = (
 			);
 			name = PhotoAlbum;
+			packageProductDependencies = (
+				9A8BBBDC24D95ED70078D24D /* DTModelStorage */,
+				9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */,
+				9A8BBBE224D95F1F0078D24D /* DTCollectionViewManager */,
+			);
 			productName = PhotoAlbum;
 			productReference = D09F1C321EC1349100C07155 /* PhotoAlbum.app */;
 			productType = "com.apple.product-type.application";
@@ -308,7 +301,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
 					D09F1C311EC1349100C07155 = {
@@ -327,6 +320,11 @@
 				Base,
 			);
 			mainGroup = D09F1C291EC1349100C07155;
+			packageReferences = (
+				9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */,
+				9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */,
+				9A8BBBE124D95F1F0078D24D /* XCRemoteSwiftPackageReference "DTCollectionViewManager" */,
+			);
 			productRefGroup = D09F1C331EC1349100C07155 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -439,6 +437,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -446,8 +445,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -473,7 +474,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -497,6 +498,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -504,8 +506,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -525,10 +529,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -544,19 +549,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -572,18 +576,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = PhotoAlbum/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.PhotoAlbum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoAlbum/PhotoAlbum-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -610,6 +613,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DenTelezhkin/DTModelStorage";
+			requirement = {
+				branch = "custom-view-mappings";
+				kind = branch;
+			};
+		};
+		9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DenTelezhkin/DTTableViewManager";
+			requirement = {
+				branch = "custom-view-mappings";
+				kind = branch;
+			};
+		};
+		9A8BBBE124D95F1F0078D24D /* XCRemoteSwiftPackageReference "DTCollectionViewManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DenTelezhkin/DTCollectionViewManager";
+			requirement = {
+				branch = "custom-view-registration";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9A8BBBDC24D95ED70078D24D /* DTModelStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */;
+			productName = DTModelStorage;
+		};
+		9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */;
+			productName = DTTableViewManager;
+		};
+		9A8BBBE224D95F1F0078D24D /* DTCollectionViewManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A8BBBE124D95F1F0078D24D /* XCRemoteSwiftPackageReference "DTCollectionViewManager" */;
+			productName = DTCollectionViewManager;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D09F1C2A1EC1349100C07155 /* Project object */;
 }

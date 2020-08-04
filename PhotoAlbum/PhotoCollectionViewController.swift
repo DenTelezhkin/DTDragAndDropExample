@@ -6,6 +6,7 @@ A collection view controller that displays the photos in a photo album. Supports
 */
 
 import UIKit
+import DTCollectionViewManager
 
 class PhotoCollectionViewController: UICollectionViewController, DTCollectionViewManageable {
     
@@ -20,15 +21,23 @@ class PhotoCollectionViewController: UICollectionViewController, DTCollectionVie
     /// Stores the album state when the drag begins.
     private var albumBeforeDrag: PhotoAlbum?
     
-    private func photo(at indexPath: IndexPath) -> Photo {
-        return manager.memoryStorage.item(at: indexPath) as! Photo
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        manager.startManaging(withDelegate: self)
-        manager.register(PhotoCollectionViewCell.self)
+        manager.register(PhotoCollectionViewCell.self) { [weak self] mapping in
+            mapping.cellRegisteredByStoryboard = true
+            mapping.itemsForBeginningDragSession { _, _, photo, _ in
+                [self?.dragItem(forPhoto: photo)].compactMap { $0 }
+            }
+            mapping.itemsForAddingToDragSession { _, _, _, photo, _ in
+                [self?.dragItem(forPhoto: photo)].compactMap { $0 }
+            }
+            mapping.dragPreviewParameters { cell, _, _  in
+                let previewParameters = UIDragPreviewParameters()
+                previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
+                return previewParameters
+            }
+        }
         configureDrag()
         configureDrop()
         
@@ -38,17 +47,6 @@ class PhotoCollectionViewController: UICollectionViewController, DTCollectionVie
     }
     
     func configureDrag() {
-        manager.itemsForBeginningDragSession(from: PhotoCollectionViewCell.self) { [weak self] _, _, _, indexPath in
-            return [self?.dragItem(forPhotoAt: indexPath)].flatMap { $0 }
-        }
-        manager.itemsForAddingToDragSession(from: PhotoCollectionViewCell.self) { [weak self] _, _, _, _, indexPath in
-            return [self?.dragItem(forPhotoAt: indexPath)].flatMap { $0 }
-        }
-        manager.dragPreviewParameters(for: PhotoCollectionViewCell.self) { cell, _, _  in
-            let previewParameters = UIDragPreviewParameters()
-            previewParameters.visiblePath = UIBezierPath(rect: cell.clippingRectForPhoto)
-            return previewParameters
-        }
         manager.dragSessionWillBegin { [weak self] _ in
             self?.albumBeforeDrag = self?.album
         }
@@ -167,8 +165,7 @@ class PhotoCollectionViewController: UICollectionViewController, DTCollectionVie
     }
     
     /// Helper method to obtain a drag item for the photo at the index path.
-    private func dragItem(forPhotoAt indexPath: IndexPath) -> UIDragItem {
-        let photo = self.photo(at: indexPath)
+    private func dragItem(forPhoto photo: Photo) -> UIDragItem {
         let itemProvider = photo.itemProvider
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = photo

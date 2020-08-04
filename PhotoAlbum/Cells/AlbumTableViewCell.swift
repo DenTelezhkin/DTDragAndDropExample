@@ -6,6 +6,7 @@ A table view cell used to display a photo album in the photo library.
 */
 
 import UIKit
+import DTModelStorage
 
 class AlbumTableViewCell: UITableViewCell, ModelTransfer {
     

@@ -29,14 +29,14 @@ class PhotoLibrary {
     
     /// Adds a photo to the album.
     func add(_ photo: Photo, to album: PhotoAlbum) {
-        guard let albumIndex = albums.index(of: album) else { return }
+        guard let albumIndex = albums.firstIndex(of: album) else { return }
         
         albums[albumIndex].photos.insert(photo, at: 0)
     }
     
     /// Inserts the photo at a specific index in the album.
     func insert(_ photo: Photo, into album: PhotoAlbum, at index: Int) {
-        guard let albumIndex = albums.index(of: album) else { return }
+        guard let albumIndex = albums.firstIndex(of: album) else { return }
         
         albums[albumIndex].photos.insert(photo, at: index)
     }
@@ -50,7 +50,7 @@ class PhotoLibrary {
     
     /// Moves a photo from one index to another in the album.
     func movePhoto(in album: PhotoAlbum, from sourceIndex: Int, to destinationIndex: Int) {
-        guard let albumIndex = albums.index(of: album) else { return }
+        guard let albumIndex = albums.firstIndex(of: album) else { return }
         
         let photo = albums[albumIndex].photos[sourceIndex]
         albums[albumIndex].photos.remove(at: sourceIndex)
@@ -59,9 +59,9 @@ class PhotoLibrary {
     
     /// Moves a photo to a different album at a specific index in that album. Defaults to inserting at the beginning of the album if no index is specified.
     func movePhoto(_ photo: Photo, to album: PhotoAlbum, index: Int = 0) {
-        guard let sourceAlbumIndex = albums.index(where: { album in album.photos.contains(photo) }),
-            let indexOfPhotoInSourceAlbum = albums[sourceAlbumIndex].photos.index(of: photo),
-            let destinationAlbumIndex = albums.index(of: album)
+        guard let sourceAlbumIndex = albums.firstIndex(where: { album in album.photos.contains(photo) }),
+            let indexOfPhotoInSourceAlbum = albums[sourceAlbumIndex].photos.firstIndex(of: photo),
+            let destinationAlbumIndex = albums.firstIndex(of: album)
             else { return }
         
         let photo = albums[sourceAlbumIndex].photos[indexOfPhotoInSourceAlbum]
@@ -79,7 +79,7 @@ class PhotoLibrary {
         stopAutomaticInsertions()
         albumForAutomaticInsertions = album
         automaticInsertionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-            guard let album = self.albumForAutomaticInsertions, let albumIndex = self.albums.index(of: album) else { return }
+            guard let album = self.albumForAutomaticInsertions, let albumIndex = self.albums.firstIndex(of: album) else { return }
             let image: UIImage = #imageLiteral(resourceName: "AutomaticInsertion.png")
             let photo = Photo(image: image)
             let insertionIndex = Int(arc4random_uniform(UInt32(self.albums[albumIndex].photos.count)))

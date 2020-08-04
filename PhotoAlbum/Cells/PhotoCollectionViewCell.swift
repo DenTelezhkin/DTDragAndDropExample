@@ -6,6 +6,7 @@ A collection view cell used to display a photo in a photo album.
 */
 
 import UIKit
+import DTTableViewManager
 
 class PhotoCollectionViewCell: UICollectionViewCell, ModelTransfer {
     

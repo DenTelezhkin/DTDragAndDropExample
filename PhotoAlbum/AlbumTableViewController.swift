@@ -6,19 +6,28 @@ A table view controller that displays the albums in the photo library. Supports 
 */
 
 import UIKit
+import DTTableViewManager
 
 class AlbumTableViewController: UITableViewController, DTTableViewManageable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        manager.startManaging(withDelegate: self)
-        manager.register(AlbumTableViewCell.self)
-        manager.editingStyle(for: AlbumTableViewCell.self) { _, _, _ in .none }
-        manager.shouldIndentWhileEditing(AlbumTableViewCell.self) { _, _, _ in false }
-        manager.move(AlbumTableViewCell.self) { [unowned manager] to, _, album, from in
-            PhotoLibrary.sharedInstance.moveAlbum(at: from.row, to: to.row)
-            manager.memoryStorage.moveItemWithoutAnimation(from: from, to: to)
+        manager.register(AlbumTableViewCell.self) { [unowned manager, weak self] mapping in
+            mapping.shouldIndentWhileEditing { _,_,_ in false }
+            mapping.editingStyle { _,_ in .none }
+            mapping.moveRowTo { to, _, album, from in
+                PhotoLibrary.sharedInstance.moveAlbum(at: from.row, to: to.row)
+                manager.memoryStorage.moveItemWithoutAnimation(from: from, to: to)
+            }
+            mapping.itemsForBeginningDragSession { _, _, _, indexPath in
+                guard let self = self else { return [] }
+                if self.tableView.isEditing {
+                    // User wants to reorder a row, don't return any drag items. The table view will allow a drag to begin for reordering only.
+                    return []
+                }
+                return self.dragItems(forAlbumAt: indexPath)
+            }
         }
         configureDrag()
         configureDrop()
@@ -31,14 +40,6 @@ class AlbumTableViewController: UITableViewController, DTTableViewManageable {
     }
     
     func configureDrag() {
-        manager.itemsForBeginningDragSession(from: AlbumTableViewCell.self) { [weak self] _, _, _, indexPath in
-            guard let _self = self else { return [] }
-            if _self.tableView.isEditing {
-                // User wants to reorder a row, don't return any drag items. The table view will allow a drag to begin for reordering only.
-                return []
-            }
-            return _self.dragItems(forAlbumAt: indexPath)
-        }
         manager.dragSessionWillBegin { [weak self] _ in
             self?.navigationItem.rightBarButtonItem?.isEnabled = false
         }
