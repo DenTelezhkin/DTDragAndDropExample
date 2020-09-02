@@ -47,7 +47,6 @@
 		37EDDE8A1EDE03CC008B4EC2 /* Album7Photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE681EDE036B008B4EC2 /* Album7Photo2.jpg */; };
 		37EDDE8B1EDE03CC008B4EC2 /* Album7Photo3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE5A1EDE036B008B4EC2 /* Album7Photo3.jpg */; };
 		37EDDE8C1EDE03CC008B4EC2 /* Album7Photo4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37EDDE521EDE036B008B4EC2 /* Album7Photo4.jpg */; };
-		9A8BBBDD24D95ED70078D24D /* DTModelStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBDC24D95ED70078D24D /* DTModelStorage */; };
 		9A8BBBE024D95EFC0078D24D /* DTTableViewManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */; };
 		9A8BBBE324D95F1F0078D24D /* DTCollectionViewManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8BBBE224D95F1F0078D24D /* DTCollectionViewManager */; };
 		D09F1C361EC1349100C07155 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F1C351EC1349100C07155 /* AppDelegate.swift */; };
@@ -136,7 +135,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A8BBBE024D95EFC0078D24D /* DTTableViewManager in Frameworks */,
-				9A8BBBDD24D95ED70078D24D /* DTModelStorage in Frameworks */,
 				9A8BBBE324D95F1F0078D24D /* DTCollectionViewManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,7 +284,6 @@
 			);
 			name = PhotoAlbum;
 			packageProductDependencies = (
-				9A8BBBDC24D95ED70078D24D /* DTModelStorage */,
 				9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */,
 				9A8BBBE224D95F1F0078D24D /* DTCollectionViewManager */,
 			);
@@ -321,7 +318,6 @@
 			);
 			mainGroup = D09F1C291EC1349100C07155;
 			packageReferences = (
-				9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */,
 				9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */,
 				9A8BBBE124D95F1F0078D24D /* XCRemoteSwiftPackageReference "DTCollectionViewManager" */,
 			);
@@ -615,38 +611,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DenTelezhkin/DTModelStorage";
-			requirement = {
-				branch = "custom-view-mappings";
-				kind = branch;
-			};
-		};
 		9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DenTelezhkin/DTTableViewManager";
 			requirement = {
-				branch = "custom-view-mappings";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = "8.0.0-beta.1";
 			};
 		};
 		9A8BBBE124D95F1F0078D24D /* XCRemoteSwiftPackageReference "DTCollectionViewManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DenTelezhkin/DTCollectionViewManager";
 			requirement = {
-				branch = "custom-view-registration";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = "8.0.0-beta.1";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9A8BBBDC24D95ED70078D24D /* DTModelStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9A8BBBDB24D95ED70078D24D /* XCRemoteSwiftPackageReference "DTModelStorage" */;
-			productName = DTModelStorage;
-		};
 		9A8BBBDF24D95EFC0078D24D /* DTTableViewManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9A8BBBDE24D95EFC0078D24D /* XCRemoteSwiftPackageReference "DTTableViewManager" */;
